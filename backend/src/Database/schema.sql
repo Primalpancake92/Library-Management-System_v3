@@ -4,5 +4,5 @@ CREATE TABLE IF NOT EXISTS user (
     last_name TEXT NOT NULL,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    account_active BOOLEAN NOT NULL
+    account_active NUMBER NOT NULL DEFAULT 1 CHECK(account_active IN (0, 1))
 )
