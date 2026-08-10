@@ -10,11 +10,17 @@ const schema = fs.readFileSync(
 
 db.exec(schema);
 
-const prepStmt = db.prepare(`
-    INSERT INTO user (email, first_name, last_name, 
-    username, password, account_active) 
-    VALUES (?, ?, ?, ?, ?, ?)
+db.exec(`
+    BEGIN;
+    DELETE FROM user;
+    COMMIT;
 `)
+
+const prepStmt = db.prepare(`
+    INSERT INTO user (email, first_name, last_name,
+    username, password, account_active)
+    VALUES (?, ?, ?, ?, ?, ?)
+`);
 
 
 for (const {email, first_name, last_name,

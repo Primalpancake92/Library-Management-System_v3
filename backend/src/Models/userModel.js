@@ -1,8 +1,9 @@
 const db = require("../config/database_conn");
 
 class UserModel {
-    static createNewUser({email, first_name, last_name, username,
-        password, account_active
+    static createNewUser({
+        email, first_name, last_name, username,
+        password, account_active=1
     }) {
         const prepStmt = db.prepare(
             `INSERT INTO User (
@@ -23,6 +24,14 @@ class UserModel {
         `);
 
         return prepStmt.get(email);
+    }
+
+    static viewAllUsers() {
+        const prepStmt = db.prepare(`
+            SELECT * FROM User
+        `);
+        
+        return prepStmt.all();
     }
 
     static updateDetails(email, {first_name, last_name, username,
