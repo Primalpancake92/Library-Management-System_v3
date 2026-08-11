@@ -16,9 +16,7 @@ userRouter.post("/login", (req, res) => {
 });
 
 // This is the route sends a PUT request for updating user details
-userRouter.put("/:id", (req, res) => {
-    res.send("This is an update for the user");
-});
+userRouter.put("/update", userController.updateUser);
 
 // This route sends a delete request for removing the user
 userRouter.delete("/:id", (req, res) => {

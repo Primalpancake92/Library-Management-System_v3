@@ -34,8 +34,27 @@ class UserModel {
         return prepStmt.all();
     }
 
+    static isUserUnique({ email, username }) {
+        const prepStmt = db.prepare(`
+            SELECT COUNT(*) AS count
+            FROM User
+            Where email = ? and username = ?
+        `);
+
+        const numbersFound = prepStmt.get(email, username);
+        return numbersFound > 0;
+    }
+
     static updateDetails(email, {first_name, last_name, username,
-        password}) {
+    password}) {
+        const currentUser = this.findByEmail(email);
+        if (!currentUser) return false;
+
+        const firstName = first_name ?? currentUser.first_name;
+        const lastName = last_name ?? currentUser.last_name;
+        const newUsername = username ?? currentUser.username;
+        const newPassword = password ?? currentUser.password;
+
         const prepStmt = db.prepare(`
             UPDATE user 
             SET first_name = ?,
@@ -45,10 +64,11 @@ class UserModel {
             WHERE email = ?
         `);
 
-        const updatedInfo = prepStmt.run(first_name, last_name, username,
-            password, email);
-        
-        return updatedInfo.changes > 0;
+        const updatedInfo = prepStmt.run(firstName, lastName, newUsername,
+            newPassword, email
+        );
+            
+        return updatedInfo.changes;
     }
 
     static deleteUser(email) {

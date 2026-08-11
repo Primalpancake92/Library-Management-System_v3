@@ -64,11 +64,52 @@ const registerUser = async (req, res) => {
     }
 };
 
-const updateUser = async (req, res) => {
+    const updateUser = async (req, res) => {
+        const {
+            email, first_name, last_name, 
+            username, password, account_active 
+        } = req.body;
 
-};
+        if (!email || !username) {
+            return res.status(400).json({
+                message: "Plesae fill in the required fields."
+            });
+        }
+        
+        const usersFound = User.isUserUnique(email, username);
+        
+        if (usersFound) {
+            return res.status(400).json({
+                message: `Email (${email}) and username (${username}) already
+                registered. Please use a unique email and username to update.`
+            });
+        }
+
+        try {
+            User.updateDetails(email, { first_name, last_name, username, password });
+            
+            const user = User.findByEmail(email);
+
+            return res.status(200).json({
+                message: "User has been succesfully updated.",
+                first_name: `${user.first_name}`,
+                last_name: `${user.last_name}`,
+                username: `${user.username}`,
+                password: `${user.password}`
+            });
+        } catch (err) {
+            return res.status(500).json({
+                message: "Server could not process this request.",
+                error: err.message
+            });
+        }
+    };
 
 const deleteUser = async (req, res) => {
+    
+};
+
+const loginUser = async (req, res) => {
 
 };
 
