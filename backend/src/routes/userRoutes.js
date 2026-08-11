@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const userController = require("../Controllers/User/userController");
+const userAuthController = require("../Controllers/User/userAuthController");
 
 // This route sends a HTTP GET request to fetch for all the users.
 userRouter.get("/find", userController.findUserByEmail);
@@ -11,9 +12,10 @@ userRouter.get("/:id", (req, res) => {
 });
 
 // This route sends a post request when the user wants to login with credentials
-userRouter.post("/login", (req, res) => {
-    res.send("This is the login request");
-});
+userRouter.post("/login", userAuthController.loginUser);
+
+//This method registers a new user
+userRouter.post("/register", userAuthController.registerUser)
 
 // This is the route sends a PUT request for updating user details
 userRouter.put("/update", userController.updateUser);
