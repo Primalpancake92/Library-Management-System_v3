@@ -15,7 +15,8 @@ app.use(session({
     },
 }));
 
-app.use('/user', require("./routes/userRoutes.js"));
+app.use("/user", require("./routes/userRoutes"));
+app.use("/book", require("./routes/bookRoutes"));
 
 const serverConn = app.listen(port, () => {
     console.log("The server has successfully connected.");

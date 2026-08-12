@@ -82,6 +82,14 @@ const registerUser = async (req, res) => {
     }
 };
 
+const forgotPassword = (req, res) => {
+    res.send("To be later implemented.");
+};
+
+const logout = (req, res) => {
+    res.send("To be later implemented");
+}
+
 const userAuthController = {
     loginUser,
     registerUser,
