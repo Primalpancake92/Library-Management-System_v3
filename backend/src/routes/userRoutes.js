@@ -19,6 +19,8 @@ userRouter.post("/register", userAuthController.registerUser);
 
 userRouter.post("/logout", userAuthController.logout);
 
+userRouter.put("/forgotPassword", userAuthController.forgotPassword);
+
 // This is the route sends a PUT request for updating user details
 userRouter.put("/update", userController.updateUser);
 

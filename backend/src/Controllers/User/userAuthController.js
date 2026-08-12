@@ -1,7 +1,6 @@
 const User = require("../../Models/userModel");
 
 const loginUser = async (req, res) => {
-    // User identifier could be a username or email.
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -38,8 +37,10 @@ const loginUser = async (req, res) => {
                 status: "Success",
                 message: "Login successful!",
                 user: {
-                    username: user.username,
-                    email: user.email
+                    session: {
+                        email: req.session.email,
+                        username: req.session.username
+                    }
                 }
             });
         });
@@ -83,7 +84,38 @@ const registerUser = async (req, res) => {
 };
 
 const forgotPassword = (req, res) => {
-    res.send("To be later implemented.");
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+        return res.status(400).json({
+            status: "Error",
+            message: "Email or password is empty"
+        });
+    }
+
+    try {
+        const user = User.findByEmail(email);
+
+        if (!user) {
+            return res.status(404).json({
+                status: "Error",
+                message: `User with email ${email} not found.`
+            });
+        }
+
+        User.updatePassword(email, newPassword);
+
+        return res.status(200).json({
+            status: "Success",
+            message: "You have successfully changed your password"
+        });
+    } catch (err) {
+        return res.status(500).json({
+            status: "Server Error",
+            message: "Server could not process the request",
+            error: err.message
+        });
+    }
 };
 
 const logout = async (req, res) => {

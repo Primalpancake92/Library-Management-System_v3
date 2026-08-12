@@ -31,7 +31,7 @@ class UserModel {
             SELECT * FROM User
         `);
         
-        return prepStmt.all();
+        return prepStmt.run();
     }
 
     static isUserUnique({ email, username }) {
@@ -45,10 +45,10 @@ class UserModel {
         return numbersFound > 0;
     }
 
-    static updateDetails(email, {first_name, last_name, username,
-    password}) {
+    static updateDetails(email, { first_name, last_name, username,
+    password }) {
         const currentUser = this.findByEmail(email);
-        if (!currentUser) return false;
+        if (!currentUser) return;
 
         const firstName = first_name ?? currentUser.first_name;
         const lastName = last_name ?? currentUser.last_name;
@@ -56,7 +56,7 @@ class UserModel {
         const newPassword = password ?? currentUser.password;
 
         const prepStmt = db.prepare(`
-            UPDATE user 
+            UPDATE User
             SET first_name = ?,
                 last_name = ?,
                 username = ?,
@@ -71,9 +71,27 @@ class UserModel {
         return updatedInfo.changes;
     }
 
+    static updatePassword (email, newPassword) {
+        const currentUser = this.findByEmail(email);
+
+        if (!currentUser) {
+            return;
+        }
+
+        const prepStmt = db.prepare(`
+            UPDATE User
+            SET password = ?
+            WHERE email = ?
+        `);
+
+        const updatedPassword = prepStmt.run(email, newPassword);
+
+        return updatedPassword;
+    }
+
     static deleteUser(email) {
         const prepStmt = db.prepare(`
-            DELETE FROM user
+            DELETE FROM User
             WHERE email = ?
         `);
 
