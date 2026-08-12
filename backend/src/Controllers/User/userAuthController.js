@@ -49,7 +49,7 @@ const loginUser = async (req, res) => {
             status: "Error",
             message: "Server error during login",
             error: err.message
-        })
+        });
     }
 };
 
@@ -86,8 +86,38 @@ const forgotPassword = (req, res) => {
     res.send("To be later implemented.");
 };
 
-const logout = (req, res) => {
-    res.send("To be later implemented");
+const logout = async (req, res) => {
+    if (!req.session) {
+        return res.status(400).json({
+            status: "Error",
+            message: "There is no session to clear"
+        });
+    }
+
+    try {
+        return req.session.destroy((err) => {
+            if (err) {
+                return res.status(500).json({
+                    status: "Error",
+                    message: "Server could not delete session data",
+                    error: err.message
+                });
+            }
+
+            res.clearCookie("connect.sid", { path: "/" });
+
+            return res.status(200).json({
+                status: "Success",
+                message: "User session data removed"
+            });
+        });
+    } catch (err) {
+        return res.status(500).json({
+            status: "Error",
+            message: "Server error logging out the user",
+            error: err.message
+        });
+    }
 }
 
 const userAuthController = {

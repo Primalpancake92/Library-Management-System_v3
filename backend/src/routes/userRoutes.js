@@ -15,7 +15,9 @@ userRouter.get("/:id", (req, res) => {
 userRouter.post("/login", userAuthController.loginUser);
 
 //This method registers a new user
-userRouter.post("/register", userAuthController.registerUser)
+userRouter.post("/register", userAuthController.registerUser);
+
+userRouter.post("/logout", userAuthController.logout);
 
 // This is the route sends a PUT request for updating user details
 userRouter.put("/update", userController.updateUser);

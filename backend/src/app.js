@@ -5,12 +5,14 @@ const app = express();
 const port = process.env.PORT || "3000";
 
 require("./Database/init");
+
 app.use(express.json());
 app.use(session({
     secret: "test-secret",
     saveUninitialized: false,
     resave: false,
     cookie: {
+        secure: true,
         maxAge: 60000 * 15
     },
 }));
