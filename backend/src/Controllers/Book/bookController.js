@@ -75,12 +75,53 @@ const findBookByTitle = (req, res) => {
 };
 
 const updateBook = (req, res) => {
-    
+    const { title, genre, publication_year } = req.body;
+
+    if (!title || !genre || !publication_year) {
+        return res.status(400).json({
+            status: "Error",
+            message: "You have not entered anything"
+        });
+    }
+
+    try {
+        const book = Book.updateBookDetails(title, { publication_year, genre });
+
+        if (!book) {
+            return res.status(400).json({
+                status: "Error",
+                message: `Book does not exist for title ${title}.`
+            });
+        }
+
+        const updatedBook = Book.updateBookDetails(
+            title, { publication_year, genre }
+        );
+
+        return res.status(200).json({
+            status: "Success",
+            message: "Book was successfully updated.",
+            book: {
+                id: book.id,
+                title: book.title,
+                genre: book.genre,
+                publication_year: book.publication_year,
+                availability: book.available
+            }
+        });
+    } catch (err) {
+        return res.status(500).json({
+            status: "Error",
+            message: "Server could not process this request",
+            error: err.message
+        });
+    }
 };
 
 const bookController = {
     addBook,
-    findBookByTitle
+    findBookByTitle,
+    updateBook
 };
 
 module.exports = bookController;

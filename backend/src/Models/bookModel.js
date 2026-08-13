@@ -49,7 +49,7 @@ class bookModel {
         const newPubYear = publication_year ?? book.publication_year;
 
         const prepStmt = db.prepare(`
-            UPDATE INTO Book
+            UPDATE Book
             SET genre = ?,
                 publication_year = ?
             WHERE title = ?
@@ -57,7 +57,11 @@ class bookModel {
 
         const updatedBook = prepStmt.run(newGenre, newPubYear, title);
 
-        return updatedBook;
+        if (updatedBook.changes === 0) {
+            return;
+        }
+
+        return this.getBookByTitle(title);
     }
 
     static removeBook(title) {
