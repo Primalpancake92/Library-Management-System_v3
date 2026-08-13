@@ -12,7 +12,7 @@ const addBook = (req, res) => {
     }
 
     try {
-        Book.createBook({ genre, title, publication_year});
+        Book.createBook({ genre, title, publication_year });
 
         const bookAdded = Book.getBookByTitle(title);
 
@@ -118,10 +118,46 @@ const updateBook = (req, res) => {
     }
 };
 
+const deleteBook = (req, res) => {
+    const { title } = req.body;
+
+    if (!title) {
+        res.status(400).json({
+            status: "Error",
+            message: "You have not entered a title."
+        });
+    }
+
+    try {
+        const bookFound = Book.getBookByTitle(title);
+
+        if (!bookFound) {
+            res.status(400).json({
+                status: "Error",
+                message: `There are no books with the title ${title}`
+            });
+        }
+
+        Book.removeBook(bookFound.title);
+
+        return res.status(200).json({
+            status: "Success",
+            message: `The book, ${title}, has been removed.`
+        });
+    } catch (err) {
+        return res.status(500).json({
+            status: "Error",
+            message: "Could not process request",
+            error: err.message
+        })
+    }
+};
+
 const bookController = {
     addBook,
     findBookByTitle,
-    updateBook
+    updateBook,
+    deleteBook
 };
 
 module.exports = bookController;
