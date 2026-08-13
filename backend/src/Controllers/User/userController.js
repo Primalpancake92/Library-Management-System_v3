@@ -81,7 +81,37 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-    
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({
+            status: "Error",
+            message: "No email was entered"
+        });
+    }
+
+    try{
+        const userFound = await User.findByEmail(email);
+
+        if (!userFound) {
+            return res.status(400).json({
+                status: "Error",
+                message: `No user found with the email ${email}`
+            });
+        }
+
+        return res.status(200).json({
+            status: "Success",
+            message: "User was successfully removed"
+        });
+    } catch (err) {
+        return res.status(500).json({
+            status: "Error",
+            message: "Server could not process this request.",
+            error: err.message
+        });
+    }
+
 };
 
 const userController = {
