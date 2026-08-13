@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS User (
 );
 
 CREATE TABLE IF NOT EXISTS Book (
-    id NUMBER NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     genre TEXT NOT NULL CHECK (genre IN (
         'Fiction', 'Horror', 'Non-Fiction', 'Sci-fi', 'Romance', 'Fantasy',
@@ -19,5 +19,5 @@ CREATE TABLE IF NOT EXISTS Book (
         'Graphical Fiction'
     )),
     publication_year TEXT NOT NULL,
-    available NUMBER NOT NULL DEFAULT 1 CHECK(avialable IN (0,1))
+    available NUMBER NOT NULL DEFAULT 1 CHECK(available IN (0,1))
 );
