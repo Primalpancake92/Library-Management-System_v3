@@ -18,5 +18,6 @@ CREATE TABLE IF NOT EXISTS Book (
         'Mystery', 'Thriller', 'Historical Fiction', 'Young Adult',
         'Graphical Fiction'
     )),
-    publication_year TEXT NOT NULL
+    publication_year TEXT NOT NULL,
+    available NUMBER NOT NULL DEFAULT 1 CHECK(avialable IN (0,1))
 );
