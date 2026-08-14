@@ -2,5 +2,18 @@
 
 :root{ 
   --primary-colour: rgba(25, 25, 25, 1);
-  --secondary-colour: ;
+  --secondary-colour: rgb(211, 26, 211);
+  --tertiary-colour: rgba(0, 230, 255, 0.859);
+}
+
+html {
+  background-color: var(--primary-colour);
+  display: flex;
+  margin: 0;
+  justify-content: center;
+}
+
+body {
+  width: 1500px;
+  height: 100vh;
 }
