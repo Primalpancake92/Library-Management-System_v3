@@ -1,5 +1,5 @@
 const dots = [
-  { 
+  {
     position: "absolute", 
     top: "top-10",
     left: "left-75",
@@ -7,7 +7,7 @@ const dots = [
     colour: "bg-[rgb(25,175,255)]",
     rounded: "rounded-full"
   },
-  { 
+  {
     position: "absolute", 
     top: "-bottom-100",
     left: "right-75", 
