@@ -1,4 +1,11 @@
 import Dots from "../components/Dots";
+import { Link } from "react-router-dom";
+
+function WelcomeBtn() {
+    return (
+        <Link to="/login">Welcome</Link>
+    );
+}
 
 function WelcomeTitle({ libraryName }) {
     return (
@@ -8,7 +15,7 @@ function WelcomeTitle({ libraryName }) {
                 <div className="relative w-21 h-21 flex rounded-2xl
                 justify-center items-center bg-linear-to-br from-(--tertiary-colour)
                 via-blue-300 to-(--secondary-colour)">
-                    <h1 className="text-3xl text-white font-semibold">LC</h1>
+                    <h1 className="text-3xl text-(--primary-colour) font-semibold">LC</h1>
                 </div>
                 <div className="relative border border-l border-white h-25"></div>
                 <div className="relative flex flex-col gap-5">
@@ -17,6 +24,7 @@ function WelcomeTitle({ libraryName }) {
                         The library that is a touch away.
                     </p>
                 </div>
+                <WelcomeBtn />
             </div>
         </div>
     );

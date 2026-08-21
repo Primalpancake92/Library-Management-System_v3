@@ -1,7 +1,19 @@
 const User = require("../../Models/userModel");
 
 const getAllUsers = async (req, res) => {
+    const users = User.viewAllUsers();
 
+    if (!users) {
+        res.status(500).json({
+            status: "Error",
+            message: "There were no users found on the server"
+        });
+    }
+
+    return res.status(200).json({
+        status: "success",
+        users: users
+    });
 }
 
 const findUserByEmail = async (req, res) => {
@@ -115,6 +127,7 @@ const deleteUser = async (req, res) => {
 };
 
 const userController = {
+    getAllUsers,
     findUserByEmail,
     updateUser,
     deleteUser
