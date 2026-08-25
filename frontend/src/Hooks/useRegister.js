@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function useRegister({email, password, firstName, lastName}) {
+export default function useRegister() {
     const [ loading, setLoading ] = useState(null);
     const [ error, setError ] = useState(false);
 
@@ -11,14 +11,14 @@ export default function useRegister({email, password, firstName, lastName}) {
             const response = await fetch("http://127.0.0.1/user/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: {
+                body: JSON.stringify({
                     "email": email,
                     "password": password,
                     "first-name": firstName,
                     "last-name": lastName
-                }
-            })
-x
+                })
+            });
+
             const data = await response.json();
 
             if (!response.ok) {
@@ -34,7 +34,7 @@ x
         }
 
         setLoading(false);
-    };
 
-    registerUser()
+        return { error, loading, registerUser };
+    };
 }

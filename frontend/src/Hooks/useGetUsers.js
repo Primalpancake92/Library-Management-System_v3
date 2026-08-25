@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 function useGetUsers (apiEndpoint) {
     const [ users, setUsers ] = useState([]);
-    const [ loading, setLoading ] = useStatue(true);
+    const [ loading, setLoading ] = useState(true);
     const [ error, setError ] = useState(false);
 
     useEffect(async (apiEndpoint) => {

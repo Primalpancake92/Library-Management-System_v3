@@ -1,10 +1,17 @@
 const express = require("express");
 const db = require("./config/database_conn");
 const session = require("express-session");
+const cors = require("cors")
+
 const app = express();
 const port = process.env.PORT || "3000";
 
 require("./Database/init");
+
+app.use(cors({
+    origin: "http://127.0.0.1:3000",
+    credentials: true
+}));
 
 app.use(express.json());
 app.use(session({
