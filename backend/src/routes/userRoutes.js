@@ -3,6 +3,12 @@ const userRouter = express.Router();
 const userController = require("../Controllers/User/userController");
 const userAuthController = require("../Controllers/User/userAuthController");
 
+// This is a GET method that routes to the route to fetch all users in 
+// the system.
+
+// Note implement the middleware that checks for the 'admin' role.
+userRouter.get("/users", userController.getAllUsers);
+
 // This route sends a HTTP GET request to fetch for all the users.
 userRouter.get("/find", userController.findUserByEmail);
 

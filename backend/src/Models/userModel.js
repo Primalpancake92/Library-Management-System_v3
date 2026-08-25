@@ -31,7 +31,7 @@ class UserModel {
             SELECT * FROM User
         `);
         
-        return prepStmt.run();
+        return prepStmt.all();
     }
 
     static isUserUnique({ email, username }) {
