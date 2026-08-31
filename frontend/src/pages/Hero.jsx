@@ -7,6 +7,12 @@ function WelcomeBtn() {
     );
 }
 
+function RegisterBtn() {
+    return (
+        <Link to="/register">Register</Link>
+    )
+}
+
 function WelcomeTitle({ libraryName }) {
     return (
         <div className="relative w-full h-screen z-100 flex flex-col 
@@ -24,7 +30,10 @@ function WelcomeTitle({ libraryName }) {
                         The library that is a touch away.
                     </p>
                 </div>
+            </div>
+            <div>
                 <WelcomeBtn />
+                <RegisterBtn />
             </div>
         </div>
     );

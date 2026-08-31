@@ -5,8 +5,8 @@ function useGetUsers (apiEndpoint) {
     const [ loading, setLoading ] = useState(true);
     const [ error, setError ] = useState(false);
 
-    useEffect(async (apiEndpoint) => {
-        const response = await fetch(apiEndpoint);
+    useEffect(async () => {
+        const response = await fetch();
 
         if (!response.ok) {
             console.log("There was no response from the endpoint.");
