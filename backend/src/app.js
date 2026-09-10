@@ -9,7 +9,7 @@ const port = process.env.PORT || "3000";
 require("./Database/init");
 
 app.use(cors({
-    origin: "http://127.0.0.1:3000",
+    origin: "http://localhost:5173",
     credentials: true
 }));
 
@@ -19,7 +19,7 @@ app.use(session({
     saveUninitialized: false,
     resave: false,
     cookie: {
-        secure: true,
+        secure: false,
         maxAge: 60000 * 15
     },
 }));
