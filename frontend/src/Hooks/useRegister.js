@@ -35,7 +35,7 @@ export default function useRegister() {
             }
 
             if (!data) {
-                throw new error("Registratoin failed.");
+                throw new error("Registration failed.");
             }
         
             return true;
@@ -50,4 +50,6 @@ export default function useRegister() {
     };
 
     return { error, loading, registerUser };
+
+    // note the registerUser is a method that returns to allow for navigation.
 }

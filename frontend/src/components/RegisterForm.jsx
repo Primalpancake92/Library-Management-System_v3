@@ -1,8 +1,9 @@
 import Field from "./Field";
 import useForm from "../Hooks/useForm";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import FormActions from "./FormActions";
 
-export default function RegisterForm({ loading, error, registerUser }) {
+export default function RegisterForm({ error, loading, registerUser }) {
     const { formValues, handleChange } = useForm({
         email: "",
         username: "",
@@ -11,20 +12,18 @@ export default function RegisterForm({ loading, error, registerUser }) {
         lastName: ""
     });
 
-    const navigate = useNavigate();
-
-    const submit = async (event) => {
-        event.preventDefault();
-
-        const register = registerUser(formValues);
-
-        if (register) {
-            navigate("/login");
-        }
+    const register = async () => {
+        await registerUser(
+            formValues.email,
+            formValues.password,
+            formValues.username,
+            formValues.firstName,
+            formValues.lastName
+        );
     };
 
     return (
-        <form onSubmit={submit} className="flex flex-col border border-white
+        <form onSubmit={register} className="flex flex-col border border-white
             p-15 rounded-3xl">
             <div className="relative flex justify-center items-center 
             gap-7">
@@ -43,18 +42,7 @@ export default function RegisterForm({ loading, error, registerUser }) {
             value={formValues.username} onChange={handleChange} />
             <Field label={"Password"} name={"password"} type={"password"}
             value={formValues.password} onChange={handleChange}/>
-            <div className="relative flex justify-center items-center
-            gap-5 mt-8">
-                <Link className="relative flex justify-center 
-                items-center text-white border border-white
-                px-5 py-1 rounded-3xl" to="/">Back</Link>
-                <button className="relative flex items-center 
-                justify-center text-white border border-white
-                px-5 py-1 rounded-3xl hover:bg-(--secondary-colour)
-                transition-all duration-300 ease-in-out"
-                type="submit"
-                >Register</button>
-            </div>
+            <FormActions backTo={"/login"} submitText={"Register"} />
         </form>
     );
 } 
